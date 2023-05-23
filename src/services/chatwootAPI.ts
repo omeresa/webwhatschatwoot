@@ -28,21 +28,23 @@ export class ChatwootAPI {
         this.whatsappWebGroupParticipantsAttributeName = whatsappWebGroupParticipantsAttributeName;
         this.headers = { api_access_token: this.chatwootApiKey };
     }
-
     async broadcastMessageToChatwoot(message: Message, type: string, attachment: any, messagePrefix: string | undefined) {
         const { whatsappWebChatwootInboxId } = this;
 
         let chatwootConversation: any = null;
-        let contactNumber = "";
-        let contactName = "";
+        let contactNumber =" ";
+        let contactName = " ";
         const messageChat: Chat = await message.getChat();
         const contactIdentifier = `${messageChat.id.user}@${messageChat.id.server}`;
         const sourceId = "WhatsappWeb.js:" + contactIdentifier;
+
         if (contactIdentifier=="status@broadcast") return
+
 
         //we use the chat name as the chatwoot contact name
         //when chat is private, the name of the chat represents the contact's name
         //when chat is group, the name of the chat represents the group name
+
         contactName = messageChat.name;
 
         //if chat is group chat, whe use the name@groupId as the query to search for the contact
@@ -90,10 +92,12 @@ export class ChatwootAPI {
         //it means it was created from other WA cliente (web or device)
         //therefore we mark it as private so we can filter it
         //when receiving it from the webhook (in later steps) to avoid duplicated messages
+
         let isPrivate = false;
         if (type == "outgoing") {
             isPrivate = true;
         }
+
 
         await this.postChatwootMessage(
             chatwootConversation.id as string,
@@ -172,6 +176,7 @@ export class ChatwootAPI {
             identifier: identifier,
         };
 
+        
         const {
             data: { payload },
         } = <{ data: Record<string, unknown> }>(
@@ -193,6 +198,9 @@ export class ChatwootAPI {
     }
 
     async makeChatwootConversation(sourceId: string | number, inboxId: string, contactId: string | number) {
+       
+
+       
         const { chatwootAccountId, chatwootAPIUrl, headers } = this;
         const conversationsEndPoint = `/accounts/${chatwootAccountId}/conversations`;
 
