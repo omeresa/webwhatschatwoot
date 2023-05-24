@@ -1,4 +1,4 @@
-<import axios, { AxiosRequestHeaders } from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 import { Message, Chat, GroupChat, Client, Contact } from "whatsapp-web.js";
 import FormData from "form-data";
 import MimeTypes from "mime-types";
