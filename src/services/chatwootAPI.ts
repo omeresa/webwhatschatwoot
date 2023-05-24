@@ -1,9 +1,4 @@
-
-//Prueba de Cambio en el archivo
-//Prueba de Cambio en el archivo 3
-//TEST
-
-import axios, { AxiosRequestHeaders } from "axios";
+<import axios, { AxiosRequestHeaders } from "axios";
 import { Message, Chat, GroupChat, Client, Contact } from "whatsapp-web.js";
 import FormData from "form-data";
 import MimeTypes from "mime-types";
@@ -254,16 +249,34 @@ export class ChatwootAPI {
             await axios.post(chatwootAPIUrl + conversationsEndPoint, customAttributes, { headers: headers })
         );
         return data;
-    }
+    
+}
+        // FILTRAMOS los siguientes mensajeS
 
-    async postChatwootMessage(
-        conversationId: string | number,
-        message: string,
-        type: string,
-        isPrivate = false,
-        messagePrefix?: string,
-        attachment?: any
-    ) {
+        async postChatwootMessage(
+            conversationId: string | number,
+            message: string,
+            type: string,
+            isPrivate = false,
+            messagePrefix?: string,
+            attachment?: any
+        ) {
+    
+    console.log ('mensaje filtrados')
+    
+     const mensaje = message;
+    
+            if( mensaje.includes ("📍 SALIDA PUNTO DE INTERES") ||
+                mensaje.includes ("📍 ENTRADA PUNTO DE INTERES")||
+                mensaje.includes ("🚘 DESBLOQUEO DE MOTOR:")||
+                mensaje.includes ("🚨 DESACTIVACION DE PANICO: ") ||
+                mensaje.includes ("📍 ENTRADA GEOCERCA")||
+                mensaje.includes ("📍 SALIDA GEOCERCA")
+            )return
+    
+
+
+
         const { chatwootAccountId, chatwootAPIUrl } = this;
         const messagesEndPoint = `/accounts/${chatwootAccountId}/conversations/${conversationId}/messages`;
 
@@ -327,3 +340,4 @@ export class ChatwootAPI {
         return payload;
     }
 }
+>
