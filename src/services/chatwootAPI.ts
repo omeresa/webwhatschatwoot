@@ -37,32 +37,21 @@ export class ChatwootAPI {
         const messageChat: Chat = await message.getChat();
         var contactIdentifier = `${messageChat.id.user}@${messageChat.id.server}`;
         var  sourceId = "WhatsappWeb.js:" + contactIdentifier;
-
         if (contactIdentifier=="status@broadcast") return
-
-// Filtrar mensajes en un grupo  
-const notificaciones = messageChat.lastMessage.body
-
-//console.log (messageChat.lastMessage.body)
-
-      if( notificaciones.includes ("PARO DE MOTOR:") ||
-          notificaciones.includes ("ALERTA DE PANICO:")
-
-        ){
-                messageChat.lastMessage.body=messageChat.lastMessage.body + "\r\n Contacto: " + contactIdentifier +" Nombre: "+ messageChat.name
-                message.body=messageChat.lastMessage.body
-
-                sourceId = "WhatsappWeb.js: 5215555555555";
-                messageChat.id.user="5215555555555";
-                messageChat.id._serialized="5215555555555@c.us";
-                messageChat.name="Sistema de Notificaciones";
-                //messageChat.lastMessage.data.notifyName="Sistema de Notificaciones";
-                messageChat.lastMessage.id.remote="5215555555555@c.us";
-                messageChat.lastMessage.from="5215555555555@c.us";
-
-                contactIdentifier = `${messageChat.id.user}@${messageChat.id.server}`;
-
-         }
+        // Filtrar mensajes en un grupo  
+        const notificaciones = messageChat.lastMessage.body
+        if( notificaciones.includes("PARO DE MOTOR:") ||
+            notificaciones.includes("ALERTA DE PANICO:")){
+            messageChat.lastMessage.body=messageChat.lastMessage.body + "\r\n Contacto: " + contactIdentifier +" Nombre: "+ messageChat.name
+            message.body=messageChat.lastMessage.body
+            messageChat.id.user="5215555555555";
+            messageChat.id._serialized="5215555555555@c.us";
+            messageChat.name="Sistema de Notificaciones";
+            messageChat.lastMessage.id.remote="5215555555555@c.us";
+            messageChat.lastMessage.from="5215555555555@c.us";
+            contactIdentifier = `${messageChat.id.user}@${messageChat.id.server}`;
+            sourceId = "WhatsappWeb.jsº:" + contactIdentifier;
+        }
    //we use the chat name as the chatwoot contact name
         //when chat is private, the name of the chat represents the contact's name
         //when chat is group, the name of the chat represents the group name
