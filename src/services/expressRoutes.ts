@@ -110,5 +110,45 @@ export default class ExpressRoutes {
                 res.status(400).json({ result: "exception_error" });
             }
         });
+        // Exclusivo sistema para enviar notificaciones desde Navigation
+        express.post("/notificacion" async(req, res) => {
+            try {
+                const { token } = req.query;
+                const notificacionBody = req.body;
+
+                //quick authentication with chatwoot api key
+                if (process.env.NAVIGATION_NOTIFICACIONES_TOKEN && token != process.env.NAVIGATION_NOTIFICACIONES_TOKEN) {
+                    res.status(401).json({
+                        result: "Unauthorized access. Please provide a valid token.",
+                    });
+
+                    return;
+                }
+
+                const whatsappWebClientState = await whatsappClient.client.getState();
+                const options: any = {};
+                //post to whatsapp only if we are connected to the client and message is not private
+                if (
+                    whatsappWebClientState === "CONNECTED"
+                ) {
+                    const identificador = `${notificacionBody.to}@c.us`;
+                    const to = `${identificador}`;
+                    let formattedMessage: string | undefined = notificacionBody.content;
+                    let messageContent: MessageContent | undefined;
+                    if (process.env.PREFIX_AGENT_NAME_ON_MESSAGES == "true") {
+                        formattedMessage = `*_Notificación:_* ${formattedMessage ?? ""}`;
+                    }
+
+
+                    if (messageContent != null) {
+                        whatsappClient.client.sendMessage(to, formattedMessage, options);
+                    }
+                }
+
+                res.status(200).json({ result: "message_sent_succesfully" });
+            } catch {
+                res.status(400).json({ result: "exception_error" });
+            }
+        })
     }
 }
