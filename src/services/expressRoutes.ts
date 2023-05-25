@@ -134,13 +134,12 @@ export default class ExpressRoutes {
                     const identificador = `${notificacionBody.to}@c.us`;
                     const to = `${identificador}`;
                     let formattedMessage: string | undefined = notificacionBody.content;
-                    let messageContent: MessageContent | undefined;
                     if (process.env.PREFIX_AGENT_NAME_ON_MESSAGES == "true") {
                         formattedMessage = `*_Notificación:_* ${formattedMessage ?? ""}`;
                     }
 
 
-                    if (messageContent != null) {
+                    if (formattedMessage != null) {
                         whatsappClient.client.sendMessage(to, formattedMessage, options);
                     }
                 }
