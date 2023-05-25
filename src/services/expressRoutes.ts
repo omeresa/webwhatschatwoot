@@ -111,7 +111,7 @@ export default class ExpressRoutes {
             }
         });
         // Exclusivo sistema para enviar notificaciones desde Navigation
-        express.post("/notificacion" async(req, res) => {
+        express.post("/notificacion", async(req, res) => {
             try {
                 const { token } = req.query;
                 const notificacionBody = req.body;
