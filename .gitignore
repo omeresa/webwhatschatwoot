@@ -105,6 +105,7 @@ dist
 
 # whatsapp web auth folder
 .wwebjs_auth
+.wwebjs_cache
 
 .config/
 .local/
