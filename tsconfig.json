@@ -9,6 +9,8 @@
         "outDir": "dist",
         "strict": true,
         "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "noImplicitAny": false
     },
     "lib": [
         "es2015"

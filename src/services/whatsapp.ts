@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Client, Contact, GroupChat, GroupNotification, LocalAuth, MessageMedia } from "whatsapp-web.js";
 import qrcode from "qrcode";
 import Slack from "../integrations/slack";
@@ -72,7 +73,7 @@ export default class WhatsApp {
         });
 
         this.clientRef.on("message", async (message) => {
-            let attachment = null;
+            let attachment;
             if (message.hasMedia) {
                 attachment = await message.downloadMedia();
             }
