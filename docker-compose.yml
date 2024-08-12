@@ -8,14 +8,10 @@ services:
     tty: true
     working_dir: /home/pptruser
     restart: always
-    ports:
-      - 8080:8080
     volumes:
       - .:/home/pptruser
-    networks:
-      - whats-app-bot
+    environment:
+      - PORT=${PORT}
+      - DB_CONNECTION=postgres
+      - TEST=${TEST}
 
-
-networks:
-  whats-app-bot:
-    driver: bridge
