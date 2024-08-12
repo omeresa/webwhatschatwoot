@@ -40,4 +40,4 @@ RUN npm install
 
 ENTRYPOINT ["/bin/sh", "-c" , "npm install && npm run start"]
 
-EXPOSE 8080
+EXPOSE 80
